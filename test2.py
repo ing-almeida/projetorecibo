@@ -63,7 +63,7 @@ if __name__ == "__main__":
         'nome': (70, 410, "Times-Bold", 30),
         'valor': (70, 375, "Helvetica-Oblique", 25),
         'contato': (70, 340, "Courier", 20),
-        'descrição': (300, 200, "Helvetica", 28),
+        'descrição': (70, 200, "Helvetica-Oblique", 28),
     }
 
     # Cria uma pasta com a data atual no Desktop
