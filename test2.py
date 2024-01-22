@@ -10,7 +10,7 @@ def extrair_dados_excel(caminho_excel):
     df = pd.read_excel(caminho_excel)
 
     # Filtra as colunas necessárias
-    colunas_necessarias = ['nome', 'valor', 'contato', 'descrição']
+    colunas_necessarias = ['nome', 'valor', 'contato', 'descrição', 'data', 'pagante','cnpj','contato2']
     df_filtrado = df[colunas_necessarias]
 
     return df_filtrado
@@ -53,17 +53,28 @@ if __name__ == "__main__":
     caminho_excel = '/home/pv-lds/Desktop/base.xlsx'
     
     # Caminho para a imagem de fundo
-    caminho_imagem = '/home/pv-lds/Desktop/temp.png'
+    caminho_imagem = '/home/pv-lds/Desktop/temp2.png'
 
     # Extrai dados do Excel
     dados_recibo = extrair_dados_excel(caminho_excel)
 
     # Define as coordenadas personalizadas para cada campo com fontes e tamanhos específicos
     coordenadas_personalizadas = {
-        'nome': (70, 410, "Times-Bold", 30),
-        'valor': (70, 375, "Helvetica-Oblique", 25),
-        'contato': (70, 340, "Courier", 20),
-        'descrição': (70, 200, "Helvetica-Oblique", 28),
+        #esquerda
+        'nome': (75, 400, "Times-Roman", 28),
+        'valor': (75, 355, "Times-Roman", 25),
+        'contato': (75, 320, "Times-Roman", 20),
+        
+        #centro
+        'descrição': (70, 190, "Times-Roman", 28),
+        'data': (320, 470, "Times-Roman",15),
+
+        #direita
+        'pagante': (440, 400, "Times-Roman",28),
+        'cnpj': (430, 355, "Times-Roman",25),
+        'contato2': (430, 320, "Times-Roman",20),
+
+
     }
 
     # Cria uma pasta com a data atual no Desktop
