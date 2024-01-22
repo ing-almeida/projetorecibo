@@ -25,17 +25,17 @@ def criar_recibo_pdf(linha, caminho_pdf, caminho_imagem):
     c.drawInlineImage(imagem, 0, 0, width=largura, height=altura)
 
     # Configura a fonte
-    c.setFont("Helvetica", 12)
+    c.setFont("Helvetica", 25)
 
-    # Calcula a posição central na página
-    x_centro = largura / 2
-    y_centro = altura / 2
+    # Define as coordenadas específicas (2.1 cm, 6.27 cm)
+    x_nome = 2.1 * 28.35  # Convertendo cm para pontos (1 cm = 28.35 pontos)
+    y_nome = altura - 7.4 * 28.35  # Convertendo cm para pontos e invertendo o eixo y
 
-    # Escreve os dados do recibo no PDF
-    c.drawString(x_centro, y_centro, f"Nome: {linha['nome']}")
-    c.drawString(x_centro, y_centro - 15, f"Valor: {linha['valor']}")
-    c.drawString(x_centro, y_centro - 30, f"Contato: {linha['contato']}")
-    c.drawString(x_centro, y_centro - 45, f"Descrição: {linha['descrição']}")
+    # Escreve o "nome" nas coordenadas especificadas
+    c.drawString(x_nome, y_nome, f"{linha['nome']}")
+    c.drawString(x_nome, y_nome - 35, f"R$ {linha['valor']}")
+    c.drawString(x_nome, y_nome - 70, f"{linha['contato']}")
+    c.drawString(x_nome, y_nome - 105, f"{linha['descrição']}")
     
     # Salva o arquivo PDF
     c.save()
@@ -73,5 +73,5 @@ if __name__ == "__main__":
         # Caminho completo para o arquivo PDF na pasta
         caminho_arquivo_pdf = os.path.join(pasta_recibos, nome_arquivo_pdf)
 
-        # Cria o PDF com os dados do recibo e a imagem de fundo
+        # Cria o PDF com os dados do recibo, a imagem de fundo, e posiciona o "nome"
         criar_recibo_pdf(linha, caminho_arquivo_pdf, caminho_imagem)
