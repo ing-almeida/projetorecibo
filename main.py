@@ -54,10 +54,10 @@ def criar_pasta_data_atual():
 
 if __name__ == "__main__":
     # Caminho real do seu arquivo Excel
-    caminho_excel = '/home/pv-lds/Desktop/22.01/base.xlsx'
+    caminho_excel = '/home/pv-lds/Desktop/Recibo/excel/base.xlsx'
     
     # Caminho para a imagem de fundo
-    caminho_imagem = '/home/pv-lds/Desktop/22.01/temp2.png'
+    caminho_imagem = '/home/pv-lds/Desktop/Recibo/templates/temp.png'
 
     # Extrai dados do Excel
     dados_recibo = extrair_dados_excel(caminho_excel)
