@@ -1,6 +1,6 @@
 import pandas as pd
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A5
+from reportlab.lib.pagesizes import letter
 
 def extrair_dados_excel(caminho_excel):
     # Carrega o arquivo Excel
@@ -13,9 +13,9 @@ def extrair_dados_excel(caminho_excel):
     return df_filtrado
 
 def criar_recibo_pdf(linha, caminho_pdf):
-    # Configura o tamanho da página como A5
-    largura, altura = A5
-    c = canvas.Canvas(caminho_pdf, pagesize=A5)
+    # Configura o tamanho da página como letter em formato paisagem
+    altura, largura = letter
+    c = canvas.Canvas(caminho_pdf, pagesize=(largura, altura))
 
     # Configura a fonte
     c.setFont("Helvetica", 12)
@@ -34,7 +34,7 @@ def criar_recibo_pdf(linha, caminho_pdf):
     c.save()
 
 if __name__ == "__main__":
-    # Substitua 'caminho/do/seu/arquivo.xlsx' pelo caminho real do seu arquivo Excel
+    # Caminho real do seu arquivo Excel
     caminho_excel = '/home/pv-lds/Desktop/base.xlsx'
 
     # Extrai dados do Excel
@@ -47,3 +47,4 @@ if __name__ == "__main__":
         
         # Cria o PDF com os dados do recibo
         criar_recibo_pdf(linha, nome_arquivo_pdf)
+
