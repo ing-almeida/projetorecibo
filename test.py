@@ -3,6 +3,7 @@ import pandas as pd
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from datetime import datetime
+from PIL import Image
 
 def extrair_dados_excel(caminho_excel):
     # Carrega o arquivo Excel
@@ -14,10 +15,14 @@ def extrair_dados_excel(caminho_excel):
 
     return df_filtrado
 
-def criar_recibo_pdf(linha, caminho_pdf):
+def criar_recibo_pdf(linha, caminho_pdf, caminho_imagem):
     # Configura o tamanho da página como letter em formato paisagem
     altura, largura = letter
     c = canvas.Canvas(caminho_pdf, pagesize=(largura, altura))
+
+    # Adiciona a imagem de fundo
+    imagem = Image.open(caminho_imagem)
+    c.drawInlineImage(imagem, 0, 0, width=largura, height=altura)
 
     # Configura a fonte
     c.setFont("Helvetica", 12)
@@ -50,6 +55,9 @@ def criar_pasta_data_atual():
 if __name__ == "__main__":
     # Caminho real do seu arquivo Excel
     caminho_excel = '/home/pv-lds/Desktop/base.xlsx'
+    
+    # Caminho para a imagem de fundo
+    caminho_imagem = '/home/pv-lds/Desktop/temp.png'
 
     # Extrai dados do Excel
     dados_recibo = extrair_dados_excel(caminho_excel)
@@ -65,6 +73,5 @@ if __name__ == "__main__":
         # Caminho completo para o arquivo PDF na pasta
         caminho_arquivo_pdf = os.path.join(pasta_recibos, nome_arquivo_pdf)
 
-        # Cria o PDF com os dados do recibo
-        criar_recibo_pdf(linha, caminho_arquivo_pdf)
-
+        # Cria o PDF com os dados do recibo e a imagem de fundo
+        criar_recibo_pdf(linha, caminho_arquivo_pdf, caminho_imagem)
