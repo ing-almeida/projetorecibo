@@ -12,7 +12,7 @@ def extrair_dados_excel(caminho_excel):
 
     return df_filtrado
 
-def criar_recibo_pdf(dados_recibo, caminho_pdf):
+def criar_recibo_pdf(linha, caminho_pdf):
     # Configura o tamanho da página como A5
     largura, altura = A5
     c = canvas.Canvas(caminho_pdf, pagesize=A5)
@@ -25,23 +25,25 @@ def criar_recibo_pdf(dados_recibo, caminho_pdf):
     y_centro = altura / 2
 
     # Escreve os dados do recibo no PDF
-    for indice, linha in dados_recibo.iterrows():
-        c.drawString(x_centro, y_centro, f"Nome: {linha['nome']}")
-        c.drawString(x_centro, y_centro - 15, f"Valor: {linha['valor']}")
-        c.drawString(x_centro, y_centro - 30, f"Contato: {linha['contato']}")
-        c.drawString(x_centro, y_centro - 45, f"Descrição: {linha['descrição']}")
-        c.showPage()  # Avança para a próxima página se houver mais de um recibo
-
+    c.drawString(x_centro, y_centro, f"Nome: {linha['nome']}")
+    c.drawString(x_centro, y_centro - 15, f"Valor: {linha['valor']}")
+    c.drawString(x_centro, y_centro - 30, f"Contato: {linha['contato']}")
+    c.drawString(x_centro, y_centro - 45, f"Descrição: {linha['descrição']}")
+    
     # Salva o arquivo PDF
     c.save()
 
 if __name__ == "__main__":
     # Substitua 'caminho/do/seu/arquivo.xlsx' pelo caminho real do seu arquivo Excel
     caminho_excel = '/home/pv-lds/Desktop/base.xlsx'
-    
-    # Substitua 'recibo.pdf' pelo nome desejado para o arquivo PDF
-    caminho_pdf = 'recibo.pdf'
 
+    # Extrai dados do Excel
     dados_recibo = extrair_dados_excel(caminho_excel)
-    criar_recibo_pdf(dados_recibo, caminho_pdf)
 
+    # Itera sobre os dados e gera um PDF por recibo
+    for indice, linha in dados_recibo.iterrows():
+        # Adota o nome da pessoa como nome do arquivo PDF
+        nome_arquivo_pdf = f"{linha['nome']}_recibo.pdf"
+        
+        # Cria o PDF com os dados do recibo
+        criar_recibo_pdf(linha, nome_arquivo_pdf)
