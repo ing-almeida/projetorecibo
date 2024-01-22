@@ -50,10 +50,10 @@ def criar_pasta_data_atual():
 
 if __name__ == "__main__":
     # Caminho real do seu arquivo Excel
-    caminho_excel = '/home/pv-lds/Desktop/base.xlsx'
+    caminho_excel = '/home/pv-lds/Desktop/22.01/base.xlsx'
     
     # Caminho para a imagem de fundo
-    caminho_imagem = '/home/pv-lds/Desktop/temp2.png'
+    caminho_imagem = '/home/pv-lds/Desktop/22.01/temp2.png'
 
     # Extrai dados do Excel
     dados_recibo = extrair_dados_excel(caminho_excel)
@@ -70,7 +70,7 @@ if __name__ == "__main__":
         'data': (320, 470, "Times-Roman",15),
 
         #direita
-        'pagante': (440, 400, "Times-Roman",28),
+        'pagante': (430, 400, "Times-Roman",24),
         'cnpj': (430, 355, "Times-Roman",25),
         'contato2': (430, 320, "Times-Roman",20),
 
