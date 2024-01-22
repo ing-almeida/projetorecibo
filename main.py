@@ -10,7 +10,7 @@ def extrair_dados_excel(caminho_excel):
     df = pd.read_excel(caminho_excel)
 
     # Filtra as colunas necessárias
-    colunas_necessarias = ['nome', 'valor', 'contato', 'descrição', 'data', 'pagante','cnpj','contato2']
+    colunas_necessarias = ['nome', 'valor', 'contato', 'descrição', 'pagante','cnpj','contato2']
     df_filtrado = df[colunas_necessarias]
 
     return df_filtrado
@@ -28,11 +28,15 @@ def criar_recibo_pdf(linha, caminho_pdf, caminho_imagem, coordenadas, fonte="Hel
     c.setFont(fonte, tamanho)
 
     # Escreve os campos nas coordenadas personalizadas
-    for campo, (x, y, fonte_campo, tamanho_campo) in coordenadas.items():
+    for campo, (x, y, fonte_campo, tamanho_campo, prefixo) in coordenadas.items():
         # Define a fonte e tamanho específicos para cada campo
         c.setFont(fonte_campo, tamanho_campo)
-        c.drawString(x, y, f"{linha[campo]}")
-    
+        # Adiciona o prefixo e formata a data, se existir
+        if campo == 'data':
+            c.drawString(x, y, f"{prefixo}{datetime.now().strftime('%Y-%m-%d')}")
+        else:
+            c.drawString(x, y, f"{prefixo}{linha[campo]}")
+
     # Salva o arquivo PDF
     c.save()
 
@@ -61,20 +65,18 @@ if __name__ == "__main__":
     # Define as coordenadas personalizadas para cada campo com fontes e tamanhos específicos
     coordenadas_personalizadas = {
         #esquerda
-        'nome': (75, 400, "Times-Roman", 28),
-        'valor': (75, 355, "Times-Roman", 25),
-        'contato': (75, 320, "Times-Roman", 20),
+        'nome': (75, 400, "Times-Roman", 28, ""),
+        'valor': (75, 355, "Times-Roman", 25, "R$ "),
+        'contato': (75, 320, "Times-Roman", 20, ""),
         
         #centro
-        'descrição': (70, 190, "Times-Roman", 28),
-        'data': (320, 470, "Times-Roman",15),
+        'descrição': (70, 190, "Times-Roman", 28, "• "),
+        'data': (340, 470, "Times-Roman", 22, ""),
 
         #direita
-        'pagante': (430, 400, "Times-Roman",24),
-        'cnpj': (430, 355, "Times-Roman",25),
-        'contato2': (430, 320, "Times-Roman",20),
-
-
+        'pagante': (430, 400, "Times-Roman", 24, ""),
+        'cnpj': (430, 355, "Times-Roman", 25, "CNPJ: "),
+        'contato2': (430, 320, "Times-Roman", 20, ""),
     }
 
     # Cria uma pasta com a data atual no Desktop
@@ -88,5 +90,6 @@ if __name__ == "__main__":
         # Caminho completo para o arquivo PDF na pasta
         caminho_arquivo_pdf = os.path.join(pasta_recibos, nome_arquivo_pdf)
 
-        # Cria o PDF com os dados do recibo, a imagem de fundo, e posiciona os campos
+        # Cria o PDF com os dados do recibo, a imagem de fundo, as coordenadas e os prefixos
         criar_recibo_pdf(linha, caminho_arquivo_pdf, caminho_imagem, coordenadas_personalizadas)
+
